@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DAOProduct.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;warehouse&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">DAO</a> &gt; <span class="el_source">DAOProduct.java</span></div><h1>DAOProduct.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DAO;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import pojo.Product;
+import pojo.wareHouseUtil;
+
+/**
+ *
+ * @author miqba
+ */
+<span class="fc" id="L20">public class DAOProduct {</span>
+    public List&lt;Product&gt; retrveTblproduct() {
+<span class="fc" id="L22">        List listProduct = new ArrayList();</span>
+<span class="fc" id="L23">        Transaction transaction = null;</span>
+<span class="fc" id="L24">        Session session = wareHouseUtil.getSessionFactory().openSession();</span>
+        try {
+<span class="fc" id="L26">            transaction = session.beginTransaction();</span>
+<span class="fc" id="L27">            Query query = session.createQuery(&quot;from Product&quot;);</span>
+<span class="fc" id="L28">            listProduct = query.list();</span>
+<span class="fc" id="L29">            transaction.commit();</span>
+<span class="nc" id="L30">        } catch (Exception e) {</span>
+<span class="nc" id="L31">            System.out.println(e);</span>
+<span class="fc" id="L32">        }</span>
+<span class="fc" id="L33">        return listProduct;</span>
+    }  
+    public List&lt;Product&gt; getbyID(String idProduct) {
+<span class="fc" id="L36">        Product product = new Product();</span>
+<span class="fc" id="L37">        List&lt;Product&gt; listProduct = new ArrayList();</span>
+<span class="fc" id="L38">        Transaction transaction = null;</span>
+<span class="fc" id="L39">        Session session = wareHouseUtil.getSessionFactory().openSession();</span>
+        
+        try {
+<span class="fc" id="L42">            transaction = session.beginTransaction();</span>
+<span class="fc" id="L43">            Query query = session.createQuery(&quot;from Product where id = :id&quot;);</span>
+<span class="fc" id="L44">            query.setString(&quot;id&quot;, idProduct);</span>
+<span class="fc" id="L45">            product = (Product) query.uniqueResult();</span>
+<span class="fc" id="L46">            listProduct = query.list();</span>
+<span class="fc" id="L47">            transaction.commit();</span>
+<span class="nc" id="L48">        } catch (Exception e) {</span>
+<span class="nc" id="L49">            System.out.println(e);</span>
+<span class="fc" id="L50">        }</span>
+<span class="fc" id="L51">        return listProduct;</span>
+    }
+    public void addProduct(Product product){
+<span class="fc" id="L54">        Transaction transaction = null;</span>
+<span class="fc" id="L55">        Session session = wareHouseUtil.getSessionFactory().openSession();</span>
+        try {
+<span class="fc" id="L57">            transaction = session.beginTransaction();</span>
+<span class="fc" id="L58">            session.save(product);</span>
+<span class="fc" id="L59">            transaction.commit();</span>
+<span class="nc" id="L60">        } catch (Exception e) {</span>
+<span class="nc" id="L61">            System.out.println(e);</span>
+<span class="fc" id="L62">        }</span>
+<span class="fc" id="L63">    }</span>
+    public void deleteUser(Integer idProduct) {
+<span class="fc" id="L65">        Transaction transaction = null;</span>
+<span class="fc" id="L66">        Session session = wareHouseUtil.getSessionFactory().openSession();</span>
+        try {
+<span class="fc" id="L68">            transaction = session.beginTransaction();</span>
+<span class="fc" id="L69">            Product usr = (Product) session.load(Product.class, new Integer(idProduct));</span>
+<span class="nc" id="L70">            session.delete(usr);</span>
+<span class="nc" id="L71">            transaction.commit();</span>
+<span class="fc" id="L72">        } catch (Exception e) {</span>
+<span class="fc" id="L73">            System.out.println(e);</span>
+<span class="nc" id="L74">        }</span>
+<span class="fc" id="L75">    }</span>
+    public void editUser(Product product) {
+<span class="fc" id="L77">        Transaction transaction = null;</span>
+<span class="fc" id="L78">        Session session = wareHouseUtil.getSessionFactory().openSession();</span>
+        try {
+<span class="fc" id="L80">            transaction = session.beginTransaction();</span>
+<span class="fc" id="L81">            session.update(product);</span>
+<span class="fc" id="L82">            transaction.commit();</span>
+<span class="fc" id="L83">        } catch (Exception e) {</span>
+<span class="fc" id="L84">            System.out.println(e);</span>
+<span class="fc" id="L85">        }</span>
+<span class="fc" id="L86">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
